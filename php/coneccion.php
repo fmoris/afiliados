@@ -9,7 +9,7 @@ if(!function_exists('mysql_connect'))
 }
 
 /*$conexion = @mysql_connect($server, $username_mysql, $password_mysql)*/
-$conexion = mysqli_connect($server,$username_mysql,$password_mysql,"ct000330_pev")
+$conexion = mysqli_connect($server,$username_mysql,$password_mysql,"ecologis_afiliados")
 or die('Error: Database to host connection: '.mysql_error());
 
 $conexion->set_charset("utf8");

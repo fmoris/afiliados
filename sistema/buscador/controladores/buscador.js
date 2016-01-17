@@ -1,7 +1,7 @@
 afiliados.controller('buscadorController', function($scope, $http, $routeParams, $location) {    
     $( "#resultado_ok" ).hide();
 
-    $scope.totalEcologistas = function(){
+   /* $scope.totalEcologistas = function(){
         $http.get('sistema/buscador/php/totalEcologistas.php', {
             params: {
                 rut: 1
@@ -12,7 +12,7 @@ afiliados.controller('buscadorController', function($scope, $http, $routeParams,
 
         })
     }
-    $scope.totalEcologistas();
+    $scope.totalEcologistas();*/
 
     $scope.envio = function() {
         $http.get('sistema/buscador/php/obtieneAfiliado.php', {
@@ -27,15 +27,16 @@ afiliados.controller('buscadorController', function($scope, $http, $routeParams,
                 $("#noafiliado").hide();
                 $("#noexiste").hide();
                 $("#existe").show();
-                $("#resultado").show();
+                $("#resultado").show();                
                 $http.get('sistema/buscador/php/obtieneInformacion.php', {
                     params: {                        
                         region: $scope.persona[0].Region,
                     }
                 }).success(function(datos){
-                    $scope.encargado = datos;                   
+                    $scope.encargado = datos;    
+                    console.log(datos);               
                     if($scope.encargado[0].conteo == 0){
-                        /*alert("No  hay presidente regional");*/
+                        alert("No  hay presidente regional");
                         $("#invitacion").hide();
                         $("#noafiliado").hide();
                         $("#existe").hide();
@@ -46,13 +47,14 @@ afiliados.controller('buscadorController', function($scope, $http, $routeParams,
                     alert("Error al cargar datos del presidente regional");
                 })
                 }else{
-                    /*alert("No Esta Afiliado");*/
+                    alert("No Esta Afiliado");
                     $("#resultado_ok").show();
                     $("#invitacion").hide();
                     $("#noafiliado").show();
                     $("#noexiste").hide();
                     $("#existe").hide();
                     $("#resultado").hide();
+
                 }            
         }).error(function(existe) {
             alert("Problema en conectar a la base de datos, intente mas tarde");

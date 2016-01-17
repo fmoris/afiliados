@@ -12,13 +12,13 @@
 
     $region = $_GET['region']; 
 
-    $result = mysqli_query($conexion," SELECT distinct pdte_regionales.Nombre as 'nombre',
-                                                       pdte_regionales.Correo as 'correo',
-                                                       pdte_regionales.Region as 'region',
+    $result = mysqli_query($conexion," SELECT distinct representantes.Nombre as 'nombre',
+                                                       representantes.Correo as 'correo',
+                                                       representantes.Region as 'region',                                                       
                                                        count(afiliados.Region) as 'conteo'
-                                       FROM afiliados,pdte_regionales
-                                       WHERE afiliados.Region = pdte_regionales.Region
-                                       AND pdte_regionales.Region LIKE '$region'");
+                                       FROM representantes, afiliados
+                                       WHERE representantes.Region = afiliados.Region
+                                       AND representantes.Region LIKE '$region'");
 
     mysqli_query($result, "SET NAMES 'utf8'"); 
     mysqli_query($result, "SET CHARACTER SET 'utf8'"); 
@@ -32,12 +32,13 @@
         $usuario["presindente"] = $row['nombre'];
         $usuario["correo"] = $row['correo'];  
         $usuario["region"] = $row['region'];
-        $usuario["conteo"] = $row['conteo'];              
+        $usuario["NombreRegion'"] = $row['NombreRegion']; 
+        $usuario["conteo"] = $row['conteo'];             
     /// inserta el objeto con los datos de registro, dentro del arreglo general
         array_push($resultadoOrdenado, $usuario);
     }   
         if(!$resultadoOrdenado){
-            echo false;
+            echo false;           
         }else{
             echo json_encode($resultadoOrdenado);
         } 

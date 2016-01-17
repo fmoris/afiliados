@@ -11,9 +11,17 @@ include('../../../php/coneccion.php');
 
 $rut = $_GET['rut'];
 
-$result = mysqli_query($conexion,"SELECT fecha_ingreso,Nombre,Region,RUT
-                                  from afiliados                                  
-                                  WHERE RUT LIKE '$rut'");
+$result = mysqli_query($conexion,"SELECT afiliados.Fecha_afiliado as 'Fecha_afiliado',
+                                         afiliados.Nombre as 'Nombre',
+                                         afiliados.Region  as 'Region',
+                                         regiones.Region as 'NombreRegion',
+                                         afiliados.Rut as 'Rut'
+                                  from afiliados, regiones                                
+                                  WHERE afiliados.Rut LIKE '$rut'
+                                  AND regiones.Numero like afiliados.Region
+                                  AND afiliados.Estado LIKE 1");
+
+
 
 mysqli_query($result, "SET NAMES 'utf8'"); 
 mysqli_query($result, "SET CHARACTER SET 'utf8'"); 
@@ -24,10 +32,11 @@ $resultadoOrdenado = array();
 while($row = mysqli_fetch_array($result)){
     // crea un objeto donde se incluyen los datos del registro
     $usuario = array();
-    $usuario["fecha_ingreso"] = $row['fecha_ingreso'];
+    $usuario["fecha_ingreso"] = $row['Fecha_afiliado'];
     $usuario["Nombre"] = $row['Nombre'];  
     $usuario["Region"] = $row['Region'];
-    $usuario["RUT"] = $row['RUT'];    
+    $usuario["NombreRegion"] = $row['NombreRegion'];
+    $usuario["RUT"] = $row['Rut'];    
 /// inserta el objeto con los datos de registro, dentro del arreglo general
     array_push($resultadoOrdenado, $usuario);
 }   
