@@ -17,7 +17,7 @@ $result = mysqli_query($conexion,"SELECT afiliados.Fecha_afiliado as 'Fecha_afil
                                          regiones.Region as 'NombreRegion',
                                          afiliados.Rut as 'Rut'
                                   from afiliados, regiones                                
-                                  WHERE afiliados.Rut LIKE '$rut'
+                                  WHERE afiliados.Rut LIKE '%$rut'
                                   AND regiones.Numero like afiliados.Region
                                   AND afiliados.Estado LIKE 1");
 

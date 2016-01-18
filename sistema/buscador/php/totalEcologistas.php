@@ -9,7 +9,9 @@
     // reemplazar con ("localhost", USUARIO, PASSWORD, NOMBRE_DE_BASE_DE_DATOS)
     include('../../../php/coneccion.php');       
     
-    $result = mysqli_query($conexion," SELECT distinct count(RUT) as 'conteo' FROM afiliados ");
+    $result = mysqli_query($conexion,"SELECT distinct count(Rut) as 'conteo' 
+                                      FROM afiliados
+                                      WHERE Estado = 1");
 
     /// crea un arreglo general vacio
     $resultadoOrdenado = array();

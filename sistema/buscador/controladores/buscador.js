@@ -1,7 +1,7 @@
 afiliados.controller('buscadorController', function($scope, $http, $routeParams, $location) {    
     $( "#resultado_ok" ).hide();
 
-   /* $scope.totalEcologistas = function(){
+   $scope.totalEcologistas = function(){
         $http.get('sistema/buscador/php/totalEcologistas.php', {
             params: {
                 rut: 1
@@ -12,7 +12,7 @@ afiliados.controller('buscadorController', function($scope, $http, $routeParams,
 
         })
     }
-    $scope.totalEcologistas();*/
+    $scope.totalEcologistas();
 
     $scope.envio = function() {
         $http.get('sistema/buscador/php/obtieneAfiliado.php', {
