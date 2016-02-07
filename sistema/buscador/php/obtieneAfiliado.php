@@ -15,9 +15,10 @@ $result = mysqli_query($conexion,"SELECT afiliados.Fecha_afiliado as 'Fecha_afil
                                          afiliados.Nombre as 'Nombre',
                                          afiliados.Region  as 'Region',
                                          regiones.Region as 'NombreRegion',
-                                         afiliados.Rut as 'Rut'
-                                  from afiliados, regiones                                
-                                  WHERE afiliados.Rut LIKE '%$rut'
+                                         afiliados.Rut as 'Rut',
+                                         circu.Nombre as 'circu'
+                                  from afiliados, regiones, circu                                
+                                  WHERE afiliados.Rut LIKE '%$rut' AND afiliados.Circu LIKE circu.Codigo
                                   AND regiones.Numero like afiliados.Region
                                   AND afiliados.Estado LIKE 1");
 
@@ -37,6 +38,8 @@ while($row = mysqli_fetch_array($result)){
     $usuario["Region"] = $row['Region'];
     $usuario["NombreRegion"] = $row['NombreRegion'];
     $usuario["RUT"] = $row['Rut'];    
+    $usuario["circu"] = $row['circu'];  
+    
 /// inserta el objeto con los datos de registro, dentro del arreglo general
     array_push($resultadoOrdenado, $usuario);
 }   
