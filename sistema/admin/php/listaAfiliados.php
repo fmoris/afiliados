@@ -9,17 +9,12 @@ header("Access-Control-Allow-Headers: X-Requested-With");
 // reemplazar con ("localhost", USUARIO, PASSWORD, NOMBRE_DE_BASE_DE_DATOS)
 include('../../../php/coneccion.php');
 
+ $region = $_GET['region']; 
+ $nombre = $_GET['nombre']; 
+ $rut = $_GET['rut']; 
 
-$result = mysqli_query($conexion,"SELECT afiliados.Fecha_afiliado as 'Fecha_afiliado',
-                                         afiliados.Nombre as 'Nombre',
-                                         afiliados.Region  as 'Region',
-                                         regiones.Region as 'NombreRegion',
-                                         afiliados.Rut as 'Rut',
-                                         circu.Nombre as 'circu'
-                                  from afiliados, regiones, circu                                
-                                  WHERE afiliados.Rut LIKE '%$rut' AND afiliados.Circu LIKE circu.Codigo
-                                  AND regiones.Numero like afiliados.Region
-                                  AND afiliados.Estado LIKE 1");
+
+$result = mysqli_query($conexion,"SELECT afiliados.Fecha_afiliado as 'Fecha_afiliado', afiliados.Nombre as 'Nombre', afiliados.Region as 'Region', regiones.Region as 'NombreRegion', afiliados.Rut as 'Rut', circu.Nombre as 'circu', afiliados.Estado as 'Estado' FROM afiliados, regiones, circu WHERE afiliados.Circu LIKE circu.Codigo AND regiones.Numero like afiliados.Region AND afiliados.Estado LIKE 1 AND afiliados.Nombre like '%$nombre%' AND regiones.Numero LIKE '%$region%' AND afiliados.Rut LIKE '%$rut%'");
 
 
 
@@ -38,15 +33,13 @@ while($row = mysqli_fetch_array($result)){
     $usuario["NombreRegion"] = $row['NombreRegion'];
     $usuario["RUT"] = $row['Rut'];    
     $usuario["circu"] = $row['circu'];  
+    $usuario["estado"] = $row['Estado'];
     
 /// inserta el objeto con los datos de registro, dentro del arreglo general
     array_push($resultadoOrdenado, $usuario);
-}   
-    if(!$resultadoOrdenado){
-        echo false;
-    }else{
-        echo json_encode($resultadoOrdenado);
-    }
+}    
+    echo json_encode($resultadoOrdenado);
+
  
 /// una vez populado el arreglo general con datos, se convierte a Json
 
